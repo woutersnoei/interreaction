@@ -19,6 +19,7 @@
 				waitTime.wait;
 				time = time + waitTime;
 			};
+			evt.forks_B.remove( forks[0] );
 		}.fork,
 		{	
 			var time = 0, waitTime;
@@ -30,7 +31,8 @@
 					\endFrame, evt.bufferArray[index][1].postln,
 				] );
 				time = time + waitTime;
-			}
+			};
+			evt.forks_B.remove( forks[1] );
 		}.fork
 	];
 	evt.forks_B = evt.forks_B.addAll( forks );

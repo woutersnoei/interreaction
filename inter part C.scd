@@ -15,6 +15,7 @@
 			waitTime.wait;
 			time = time + waitTime;
 		};
+		evt.forks_C.remove( fork );
 	}.fork;
 	evt.forks_C = evt.forks_C.add( fork );
 };
@@ -41,7 +42,7 @@ SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8|
 ~inter.active = true;
 
 (
-~inter.recordBufferForIndex( 10 );
+~inter.recordBufferForIndex( 14 );
 ~inter.start_C( 14 );
 )
 
