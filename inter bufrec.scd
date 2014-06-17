@@ -59,6 +59,10 @@
 		"can't record buffer; no score or non-existing index".postln;
 	};
 };
+
+~inter.stopBuffers = { |evt|
+	evt.recSynths.do(_.free);
+};
 );
 
 (
@@ -78,14 +82,6 @@ SynthDef( "inter_bufrec", { |buf = 0, in = 0, updateRate = 10|
 
 
 ~inter.recSynths = nil;
-
-~inter.ctrl.remove;
-~inter.ctrl = SimpleController( ~inter )
-	.put( \currentIndex, { |obj|
-		if( obj.active == true && { obj.currentIndex.notNil } ) {
-			obj.recordBufferForIndex( obj.currentIndex );
-		};
-	});
 
 /*
 (

@@ -10,6 +10,7 @@
 	recvReply = ReceiveReply( evt.recSynths.last, { |value|
 		onsets = onsets.add( value );
 	}, '/onset' );
+	evt.end_F = { recvReply.remove };
 	fork = {	
 		var time = 0, waitTime;
 		while { time < duration } {	 

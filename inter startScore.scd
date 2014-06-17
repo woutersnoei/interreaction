@@ -63,6 +63,7 @@
 		evt.playTask.stop;
 		evt.playTask = nil;
 		evt.active = false;
+		evt.stopAll;
 	};
 	evt.currentIndex = nil;
 	evt.currentItem = nil;
