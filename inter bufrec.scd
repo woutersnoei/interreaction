@@ -59,7 +59,7 @@
 		"can't record buffer; no score or non-existing index".postln;
 	};
 };
-)
+);
 
 (
 SynthDef( "inter_bufrec", { |buf = 0, in = 0, updateRate = 10|
@@ -74,7 +74,7 @@ SynthDef( "inter_bufrec", { |buf = 0, in = 0, updateRate = 10|
 	SendReply.kr( onsets, '/onset', pos - 512 );
 	RecordBuf.ar( sig, buf, 0, env.sin, (0.5pi - env).sin );
 }).load(s);
-)
+);
 
 
 ~inter.recSynths = nil;
