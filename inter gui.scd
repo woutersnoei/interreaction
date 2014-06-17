@@ -18,7 +18,7 @@
 
 ~inter.win.makeWindow = { |evt, fullScreen = true|
 	var ctrl, w;
-	evt.w = Window( "Interreaction", Rect( 120, 120, 900, 500 ), border: false ).front;
+	evt.w = Window( "Interreaction", Rect( 120, 120, 900, 500 ), border: fullScreen != true ).front;
 	evt.w.view.background = Color.black;
 	if( fullScreen ) { evt.w.fullScreen; };
 	w = evt.w;
