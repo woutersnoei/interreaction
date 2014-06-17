@@ -44,7 +44,7 @@
 		.action_( { w.close; ~inter.endScore; } )
 		.onClose_( { ctrl.remove } );
 		
-	evt.transportView = CompositeView( evt.w, Rect( evt.w.view.bounds.right - 300, 0, 300, 60 ) )
+	evt.transportView = CompositeView( evt.w, Rect( evt.w.view.bounds.right - 240, 0, 240, 60 ) )
 		.resize_( 3 );
 	
 	evt.transportView.addFlowLayout;
@@ -66,15 +66,6 @@
 		.resize_( 3 )
 		.action_( { 
 			~inter.endScore;
-		} );
-		
-	SmoothButton( evt.transportView, 60@60  )
-		.stringColor_( Color.gray(0.7) )
-		.label_( 'pause' )
-		.canFocus_( false )
-		.resize_( 3 )
-		.action_( { 
-			~inter.togglePause;
 		} );
 		
 	SmoothButton( evt.transportView, 60@60  )
