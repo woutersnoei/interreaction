@@ -34,7 +34,7 @@ SynthDef( "inter_staccato_F", { |amp = 1, buf = 0, startFrame = 22050, dur = 0.2
 	var sig, env, rate;
 	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
 	sig = PlayBuf.ar( 2, buf, rate, 1, startFrame + 319 ).sum;
-	env = Env([0,1,0,0],[0.01, dur/rate.abs, 0.05, 0).ar(2);
+	env = Env([0,1,0,0],[0.01, dur/rate.abs, 0.05], 0).ar(2);
 	sig = RoundPan.ar( 2, sig * env, Rand(-1,1), speakerRadius: 1 );
 	Out.ar(0, sig * amp );
 }).load(s);
