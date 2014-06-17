@@ -8,7 +8,10 @@
 
 ~inter.path = thisProcess.nowExecutingPath.dirname;
 
-~inter.names = [ \score, \startScore, \gui ];
+~inter.names = [ 
+	\bufrec, \parts, \ir, \controls,
+	\score, \startScore, \gui 
+];
 
 ~inter.names.do({ |item|
 	(~inter.path +/+ "inter" + item ++ ".scd").load;
