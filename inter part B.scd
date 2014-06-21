@@ -39,7 +39,7 @@
 };
 
 (
-SynthDef( "inter_tremolo_B", { |amp = 0.1, useInputLevel = 1, sustain = 8|
+SynthDef( "inter_tremolo_B", { |amp = 0.5, useInputLevel = 1, sustain = 8|
 	var sig, inAmp = 0.5;
 	inAmp = PrivateIn.ar( 0, 2 );
 	inAmp = Peak.kr( 
@@ -47,7 +47,7 @@ SynthDef( "inter_tremolo_B", { |amp = 0.1, useInputLevel = 1, sustain = 8|
 			Amplitude.kr(inAmp), 
 			Line.kr( 1, 0, 0.1 ) > 0 
 		) 
-	).clip( 0.01, 0.5 );
+	).clip( 0.01, 0.2 );
 	inAmp = if( useInputLevel, inAmp, 0.5 );
 	sig = Klank.ar( `[
 		\freqs.kr( ( 80..120 ).scramble[..9].sort.midicps ),
@@ -60,7 +60,7 @@ SynthDef( "inter_tremolo_B", { |amp = 0.1, useInputLevel = 1, sustain = 8|
 	Out.ar(0, sig * amp * inAmp);
 }).load(s);
 
-SynthDef( "inter_staccato_B", { |amp = 0.2, buf = 0, endFrame = 22050, dur = 0.1|
+SynthDef( "inter_staccato_B", { |amp = 0.5, buf = 0, endFrame = 22050, dur = 0.1|
 	var sig, env, rate;
 	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
 	sig = PlayBuf.ar( 2, buf, rate, 1, 

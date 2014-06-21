@@ -30,7 +30,7 @@
 };
 
 (
-SynthDef( "inter_otherpart_D", { |amp = 0.1, buf = 0, sustain = 12|
+SynthDef( "inter_otherpart_D", { |amp = 0.5, buf = 0, sustain = 12|
 	var sig;
 	var rate;
 	//rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;

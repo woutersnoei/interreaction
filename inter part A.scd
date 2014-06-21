@@ -32,7 +32,7 @@
 };
 
 (
-SynthDef( "inter_slow_fwd_A", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.1, sustain = 1, gate = 1|
+SynthDef( "inter_slow_fwd_A", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.5, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;
@@ -53,7 +53,7 @@ SynthDef( "inter_slow_fwd_A", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0
 	Out.ar( 0, sig * amp * env );
 }).load(s);
 
-SynthDef( "inter_slow_bwd_A", { |buf = 0, startFrame = 220500, fadeTime = 15, amp = 0.1, sustain = 1, gate = 1|
+SynthDef( "inter_slow_bwd_A", { |buf = 0, startFrame = 220500, fadeTime = 15, amp = 0.5, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;

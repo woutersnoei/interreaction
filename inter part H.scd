@@ -19,7 +19,7 @@
 };
 
 (
-SynthDef( "inter_otherpart_H", { |amp = 0.1, in = 0, buf = 0, sustain = 1, gate = 1|
+SynthDef( "inter_otherpart_H", { |amp = 0.5, in = 0, buf = 0, sustain = 1, gate = 1|
 	var sig;
 	var env;
 	var env2;
@@ -30,7 +30,7 @@ SynthDef( "inter_otherpart_H", { |amp = 0.1, in = 0, buf = 0, sustain = 1, gate 
 	sig = Normalizer.ar( sig, 1, 0.01 );
 	input = PrivateIn.ar( in, 2 );
 	sig = (sig ring1: GrayNoise.ar)
-		 * (Amplitude.kr( DelayC.ar( sig, 1, LFDNoise3.kr(0.2).range(0.1,1) ) ) - 0.01).clip(0,0.5);
+		 * (Amplitude.kr( DelayC.ar( input, 1, LFDNoise3.kr(0.2).range(0.1,1) ) ) - 0.01).clip(0,0.5);
 	sig = XFade2.ar( sig[0], sig[1], LFDNoise1.kr(0.1) ); 
 	sig = BLowCut.ar( sig, LFDNoise1.kr(0.2).exprange( 100, 10000 ), 3 );
 	sig = BHiCut.ar( sig, LFDNoise1.kr(0.2).exprange( 200, 20000 ), 3 );
@@ -46,8 +46,8 @@ SynthDef( "inter_otherpart_H", { |amp = 0.1, in = 0, buf = 0, sustain = 1, gate 
 ~inter.active = true;
 
 (
-~inter.recordBufferForIndex( 1 );
-~inter.start_G( 1 );
+~inter.recordBufferForIndex( 3 );
+~inter.start_G( 3 );
 )
 
 Synth( "inter_reverse_G", [ \buf, ~inter.bufferArray[1][0], \startFrame, 3265 ] );

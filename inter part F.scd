@@ -31,7 +31,7 @@
 };
 
 (
-SynthDef( "inter_staccato_F", { |amp = 1, buf = 0, startFrame = 22050, dur = 0.2|
+SynthDef( "inter_staccato_F", { |amp = 0.5, buf = 0, startFrame = 22050, dur = 0.2|
 	var sig, env, rate;
 	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
 	sig = PlayBuf.ar( 2, buf, rate, 1, startFrame + 319 ).sum;

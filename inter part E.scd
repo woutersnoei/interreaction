@@ -27,7 +27,7 @@
 };
 
 (
-SynthDef( "inter_slow_fwd_E", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.1, sustain = 1, gate = 1|
+SynthDef( "inter_slow_fwd_E", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.5, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;
