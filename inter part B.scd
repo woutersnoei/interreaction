@@ -24,7 +24,7 @@
 		{	
 			var time = 0, waitTime;
 			while { time < duration } {	 
-				waitTime = 0.05 exprand: 4.0;
+				waitTime = 0.05 exprand: 3.0;
 				waitTime.wait;
 				Synth( "inter_staccato_B", [
 					\buf, buffer,
@@ -54,7 +54,7 @@ SynthDef( "inter_tremolo_B", { |amp = 0.5, useInputLevel = 1, sustain = 8|
 		(..9).linexp( 0,9, 0.25, 1 ) / 10,
 		Rand( 0.05.dup(10), 0.5 )
 	], PinkNoise.ar(1.dup) );
-	sig = sig * SinOsc.kr( LFDNoise1.kr( 0.2.dup ).linexp( -1, 1, 10, 20 ) ).range(0,1);
+	sig = sig * SinOsc.kr( LFDNoise1.kr( 0.2.dup ).linexp( -1, 1, 5, 20 ) ).range(0,1);
 	sig = sig * Pan2.kr(DC.kr(1),Rand(-1,1));
 	sig = sig * Env([0,1,0],[0.5,0.5] * sustain, [2,-2] ).kr(2);
 	Out.ar(0, sig * amp * inAmp);
@@ -62,7 +62,7 @@ SynthDef( "inter_tremolo_B", { |amp = 0.5, useInputLevel = 1, sustain = 8|
 
 SynthDef( "inter_staccato_B", { |amp = 0.5, buf = 0, endFrame = 22050, dur = 0.1|
 	var sig, env, rate;
-	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
+	rate = IRand(2,12).midiratio;
 	sig = PlayBuf.ar( 2, buf, rate, 1, 
 		Rand(0, endFrame - ((dur/rate.abs) * SampleRate.ir) ) ).sum;
 	env = Env([0,1,0,0],[0.01, dur, 0.05], -4).ar(2);
