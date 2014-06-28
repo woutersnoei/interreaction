@@ -7,13 +7,14 @@
 	index = index ? evt.currentIndex;
 	duration = evt.score[index][1];
 	buffer = evt.bufferArray[index][0];
-	recvReply = ReceiveReply( evt.recSynths.last, { |value|
-		onsets = onsets.add( value );
-	}, '/onset' );
-	evt.end_G = { recvReply.remove };
 	fork = {	
 		var time = 0, waitTime;
-		while { time < duration } {	 
+		0.25.wait;
+		recvReply = ReceiveReply( evt.recSynths.last, { |value|
+			onsets = onsets.add( value );
+		}, '/onset' );
+		evt.end_G = { recvReply.remove };
+		while { time < (duration - 0.25) } {	 
 			waitTime = 0.5 exprand: 1.5;
 			waitTime.wait;
 			if( onsets.size > 1 ) {
@@ -35,6 +36,7 @@ SynthDef( "inter_reverse_G", { |amp = 0.5, buf = 0, startFrame = 22050, dur = 0.
 	var sig, env, rate;
 	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio * -0.5;
 	sig = PlayBuf.ar( 2, buf, rate, 1, startFrame + (dur * SampleRate.ir) ).sum;
+	sig = BLowCut.ar( sig, 100 );
 	env = Env([0,0.5,1,0],[0.1,0.9,0.1] * (dur / rate.abs), \lin ).ar(2);
 	sig = RoundPan.ar( 2, sig * env, Rand(-1,1), speakerRadius: 1 );
 	Out.ar(0, sig * amp );
