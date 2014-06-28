@@ -11,7 +11,7 @@
 		var time = 0, waitTime;
 		while { time < (duration - 5) } {	 
 			Synth( "inter_pulsenoise_C" );
-			waitTime = 2.0 rrand: 8.0;
+			waitTime = 2.0 rrand: 10.0;
 			waitTime.wait;
 			time = time + waitTime;
 		};
@@ -23,14 +23,15 @@
 (
 SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8|
 	var sig;
-	sig = PinkNoise.ar(1.0.dup);
-	sig = BLowCut.ar( sig, LFDNoise1.kr(0.1).exprange( 100, 5000 ), 3 );
-	sig = BHiCut.ar( sig, LFDNoise1.kr(0.1).exprange( 500, 20000 ), 3 );
+	sig = PinkNoise.ar(0.33.dup) + GrayNoise.ar(0.33.dup);
+	sig = BLowCut.ar( sig, LFDNoise1.kr(0.1).exprange( 100, 5000 ), 4 );
+	sig = BHiCut.ar( sig, LFDNoise1.kr(0.1).exprange( 500, 20000 ), 4 );
 	sig = sig * LFPulse.kr( 
-		LFDNoise1.kr( 0.2.dup ).linexp( -1, 1, 10, 20 ),
+		LFDNoise1.kr( 0.2.dup ).linexp( -1, 1, 2.5, 20 ),
 		Rand(0,1),
-		LFDNoise1.kr( 0.2.dup ).linlin( -1, 1, 0.2, 0.8 ),
-	).range(0,1);
+		LFDNoise1.kr( 0.2.dup ).linlin( -1, 1, 0.1, 0.9 ),
+	) //.lag( *LFDNoise1.kr(0.1.dup).range(-0.2,0.05).max(0) )
+		.range(0,1);
 	sig = sig * Pan2.kr(DC.kr(1),Rand(-1,1));
 	sig = sig * Env([0,1,0],[0.5,0.5] * sustain, [2,-2] ).kr(2);
 	Out.ar( 0, sig * amp );
