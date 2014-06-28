@@ -30,7 +30,7 @@
 };
 
 (
-SynthDef( "inter_otherpart_J", { |amp = 0.1, buf = 0, sustain = 12|
+SynthDef( "inter_otherpart_J", { |amp = 0.5, buf = 0, sustain = 12|
 	var sig;
 	var rate;
 	//rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
@@ -41,7 +41,8 @@ SynthDef( "inter_otherpart_J", { |amp = 0.1, buf = 0, sustain = 12|
 	sig = XFade2.ar( sig[0], sig[1], LFDNoise1.kr(0.1) ); 
 	sig = BLowCut.ar( sig, LFDNoise1.kr(0.3).exprange( 100, 10000 ), 3 );
 	sig = BHiCut.ar( sig, LFDNoise1.kr(0.3).exprange( 200, 20000 ), 3 );
-	sig = sig * LFDNoise3.kr(0.3).exprange(0.1,1);
+	sig = sig * LFDNoise3.kr(0.3).exprange(0.25,1);
+	sig = FreeVerb.ar( sig, LFDNoise1.kr(0.1).clip(0,1), 0.7 );
 	sig = RoundPan.ar( 2, sig, LFDNoise1.kr(0.3), speakerRadius: 1 );
 	sig = sig * Env( [0,1,0], [0.5,0.5] * sustain, [2,-2] ).kr(2);
 	Out.ar( 0, sig * amp );
@@ -53,7 +54,7 @@ SynthDef( "inter_otherpart_J", { |amp = 0.1, buf = 0, sustain = 12|
 ~inter.active = true;
 
 (
-~inter.recordBufferForIndex( 0 );
+~inter.recordBufferForIndex( 5 );
 ~inter.start_J( 5 );
 )
 
