@@ -40,7 +40,8 @@ SynthDef( "inter_otherpart_D", { |amp = 0.5, buf = 0, sustain = 12|
 	sig = XFade2.ar( sig[0], sig[1], LFDNoise1.kr(0.1) ); 
 	sig = BLowCut.ar( sig, LFDNoise1.kr(0.2).exprange( 100, 10000 ), 3 );
 	sig = BHiCut.ar( sig, LFDNoise1.kr(0.2).exprange( 200, 20000 ), 3 );
-	sig = sig * LFDNoise3.kr(0.3).exprange(0.1,1);
+	sig = sig * LFDNoise3.kr(0.3).exprange(0.25,1);
+	sig = FreeVerb.ar( sig, LFDNoise1.kr(0.1).clip(0,1), 0.66 );
 	sig = RoundPan.ar( 2, sig, LFDNoise1.kr(0.3), speakerRadius: 1 );
 	sig = sig * Env( [0,1,0], [0.5,0.5] * sustain, [2,-2] ).kr(2);
 	Out.ar( 0, sig * amp );
@@ -52,7 +53,7 @@ SynthDef( "inter_otherpart_D", { |amp = 0.5, buf = 0, sustain = 12|
 ~inter.active = true;
 
 (
-~inter.recordBufferForIndex( 10 );
+~inter.recordBufferForIndex( 8 );
 ~inter.start_D( 8 );
 )
 
