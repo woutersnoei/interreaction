@@ -32,14 +32,14 @@
 };
 
 (
-SynthDef( "inter_slow_fwd_I", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.1, sustain = 1, gate = 1|
+SynthDef( "inter_slow_fwd_I", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.4, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;
 	var env2;
 	pos = Sweep.ar( 0, SampleRate.ir ) + startFrame;
 	sig = PlayBufCF.ar( 2, buf, 
-		Drand( [ 2/3, 0.5, 0.25 ], inf ), // rate
+		Drand( [ 2/3, 0.5 ], inf ), // rate
 		Dwhite( 3, 10 ), // trigger
 		Dwhite( 0, pos ),
 		0, 3
@@ -54,14 +54,14 @@ SynthDef( "inter_slow_fwd_I", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0
 	Out.ar( 0, sig * amp * env );
 }).load(s);
 
-SynthDef( "inter_slow_bwd_I", { |buf = 0, startFrame = 220500, fadeTime = 15, amp = 0.1, sustain = 1, gate = 1|
+SynthDef( "inter_slow_bwd_I", { |buf = 0, startFrame = 220500, fadeTime = 15, amp = 0.5, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;
 	var env2;
 	pos = Sweep.ar( 0, SampleRate.ir ) + startFrame;
 	sig = PlayBufCF.ar( 2, buf, 
-		Drand( [ -2/3, -0.5, -0.25 ], inf ), // rate
+		Drand( [ -2/3, -0.5 ], inf ), // rate
 		Dwhite( 3, ((pos / SampleRate.ir) - 1).clip(3,10) ), // trigger
 		Dwhite( startFrame, pos ),
 		0, 1
@@ -79,8 +79,8 @@ SynthDef( "inter_slow_bwd_I", { |buf = 0, startFrame = 220500, fadeTime = 15, am
 
 /*
 (
-~inter.recordBufferForIndex( 0 );
-~inter.start_I( 0 );
+~inter.recordBufferForIndex( 13 );
+~inter.start_I( 13 );
 )
 
 ~inter.synths_I
