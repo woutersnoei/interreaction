@@ -9,7 +9,7 @@
 ~inter.path = thisProcess.nowExecutingPath.dirname;
 
 ~inter.names = [ 
-	\bufrec, \parts, \ir, \controls,
+	\bufrec, \parts, \ir, \controls, \verb,
 	\score, \startScore, \gui 
 ];
 
