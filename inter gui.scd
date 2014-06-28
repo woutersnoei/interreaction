@@ -6,7 +6,7 @@
 	if( evt.basicWindow.notNil && { evt.basicWindow.isClosed.not } ) {
 		evt.basicWindow.close;
 	};
-	evt.basicWindow = Window().front;
+	evt.basicWindow = Window("interreaction", Rect(300, 80, 400, 400)).front;
 	evt.basicWindow.userCanClose_( false );
 	evt.basicWindow.addFlowLayout;
 	evt.openWindowButton = RoundButton( evt.basicWindow, 392 @ 392 )
