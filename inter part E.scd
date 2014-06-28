@@ -12,7 +12,7 @@
 		3.do({ |i|
 			evt.synths_E = evt.synths_E.addAll(
 				2.collect({
-					Synth( "inter_slow_fwd_A", [ 
+					Synth( "inter_slow_fwd_E", [ 
 						\buf, buffer, 
 						\startFrame, evt.bufferArray[index][1],
 						\sustain, duration - 0.25 - (3 * i),
@@ -27,7 +27,7 @@
 };
 
 (
-SynthDef( "inter_slow_fwd_E", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0.5, sustain = 1, gate = 1|
+SynthDef( "inter_slow_fwd_E", { |buf = 0, startFrame = 0, fadeTime = 5, amp = 0.5, sustain = 1, gate = 1|
 	var sig;
 	var pos;
 	var env;
@@ -39,15 +39,16 @@ SynthDef( "inter_slow_fwd_E", { |buf = 0, startFrame = 0, fadeTime = 15, amp = 0
 		Dwhite( 0, pos ),
 		0, 3
 	);
+	env2 = Env([1,1,4,0],[sustain - 1, 1, 0.01],\lin).kr(2);
 	sig = XFade2.ar( sig[0], sig[1], LFDNoise1.kr(0.1) ); 
 	sig = BLowCut.ar( sig, XLine.kr( 10000, 150, fadeTime ), 3 );
 	sig = BLowCut.ar( sig, LFDNoise1.kr(0.2).exprange( 100, 10000 ), 3 );
 	sig = BHiCut.ar( sig, LFDNoise1.kr(0.2).exprange( 200, 20000 ), 3 );
 	sig = RoundPan.ar( 2, sig, LFDNoise1.kr(0.2), speakerRadius: 1 );
 	env = Env.asr(0.1,1,0.1).kr(2, gate);
-	env2 = Env([1,1,0],[sustain, 4],\lin).kr(2);
-	sig = BHiCut.ar( sig, env2.linexp(0,1,20,20000), 3 ) * env2;
-	Out.ar( 0, sig * amp * env );
+	//env2 = Env([1,1,4,0],[sustain - 1, 1, 0.01],\lin).kr(2);
+	//sig = BHiCut.ar( sig, env2.linexp(0,1,20,20000), 3 ) * env2;
+	Out.ar( 0, sig * amp * env * env2 );
 }).load(s);
 );
 
