@@ -3,7 +3,7 @@
 ~inter = ~inter ? EM();
 
 ~inter.start_F = { |evt, index|
-	var duration, buffer, fork, recvReply, onsets = [];
+	var duration, buffer, fork, fork2, recvReply, onsets = [];
 	index = index ? evt.currentIndex;
 	duration = evt.score[index][1];
 	buffer = evt.bufferArray[index][0];
@@ -27,15 +27,36 @@
 		recvReply.remove;
 		evt.forks_F.remove( fork );
 	}.fork;
+	fork2 = {	
+		var time = 0, waitTime;
+		while { time < duration } {	 
+			waitTime = 0.05 exprand: 0.5;
+			waitTime.wait;
+			if( onsets.size > 0 ) {
+				Synth( "inter_staccato_F", [
+					\buf, buffer,
+					\startFrame, onsets.choose,
+					\amp, 0.125,
+					\hpf, 500,
+				] );
+			};
+			time = time + waitTime;
+		};
+		evt.forks_F.remove( fork2 );
+	}.fork;
 	evt.forks_F = evt.forks_F.add( fork );
+	evt.forks_F = evt.forks_F.add( fork2 );
 };
 
 (
-SynthDef( "inter_staccato_F", { |amp = 0.5, buf = 0, startFrame = 22050, dur = 0.2|
+SynthDef( "inter_staccato_F", { |amp = 0.5, buf = 0, startFrame = 22050, hpf = 100, dur = 0.3|
 	var sig, env, rate;
 	rate = (IRand(1,4) * IRand(0,1).linlin(0,1,-1,1)).midiratio;
 	sig = PlayBuf.ar( 2, buf, rate, 1, startFrame + 319 ).sum;
-	env = Env([0,1,0,0],[0.01, dur/rate.abs, 0.05], 0).ar(2);
+	sig = FreqShift.ar( sig, Rand(0,200) );
+	sig = BLowCut.ar( sig, hpf, 2 );
+	//env = Env([0,1,0,0],[0.01, dur/rate.abs, 0.05], 0).ar(2);
+	env = Env([0,1,1,0],[0.01, dur/rate.abs, 0.05], 0).ar(2);
 	sig = RoundPan.ar( 2, sig * env, Rand(-1,1), speakerRadius: 1 );
 	Out.ar(0, sig * amp );
 }).load(s);
