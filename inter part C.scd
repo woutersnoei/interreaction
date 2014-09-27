@@ -2,15 +2,16 @@
 
 ~inter = ~inter ? EM();
 
-~inter.start_C = { |evt, index|
-	var duration, buffer, fork;
-	index = index ? evt.currentIndex;
-	duration = evt.score[ index ][1];
-	buffer = evt.bufferArray[index][0];
+~inter.start_C = { |evt, index, duration|
+	var buffer, fork;
+	if( duration.isNil ) {
+		index = index ? evt.currentIndex;
+		duration = evt.score[ index ][1];
+	};
 	fork = {	
 		var time = 0, waitTime;
 		while { time < (duration - 5) } {	 
-			Synth( "inter_pulsenoise_C" );
+			Synth( "inter_pulsenoise_C", [ \amp, evt.amp_C ] );
 			waitTime = 2.0 rrand: 10.0;
 			waitTime.wait;
 			time = time + waitTime;
@@ -20,8 +21,16 @@
 	evt.forks_C = evt.forks_C.add( fork );
 };
 
+~inter.end_C = { |evt|
+	evt.forks_C.do(_.stop);
+	RootNode(s).set( \global_gate, 0 );
+	evt.forks_C = nil;
+};
+
+~inter.amp_C = 0.05;
+
 (
-SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8|
+SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8, global_gate = 1|
 	var sig;
 	sig = PinkNoise.ar(0.33.dup) + GrayNoise.ar(0.33.dup);
 	sig = BLowCut.ar( sig, LFDNoise1.kr(0.1).exprange( 100, 5000 ), 4 );
@@ -34,6 +43,7 @@ SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8|
 		.range(0,1);
 	sig = sig * Pan2.kr(DC.kr(1),Rand(-1,1));
 	sig = sig * Env([0,1,0],[0.5,0.5] * sustain, [2,-2] ).kr(2);
+	sig = sig * Env.cutoff.kr(2,global_gate);
 	Out.ar( 0, sig * amp );
 }).load(s);
 );
@@ -46,6 +56,10 @@ SynthDef( "inter_pulsenoise_C", { |amp = 0.1, sustain = 8|
 ~inter.recordBufferForIndex( 14 );
 ~inter.start_C( 14 );
 )
+
+~inter.start_C( 14, inf );
+
+~inter.end_C();
 
 (
 {
