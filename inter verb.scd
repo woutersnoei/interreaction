@@ -123,7 +123,7 @@ q.verb.cmdPeriod = { |evt| if( evt.active == 1 ) { { evt.start }.defer(0.1); } }
 CmdPeriod.add( q.verb );
 
 // window and views
-q.verb.w = Window( "verb", Rect(146, 365, 113, 84)).front;
+q.verb.w = Window( "verb", Rect(600, 494, 113, 84)).front;
 q.verb.w.addFlowLayout;
 q.verb.views = ();
 
