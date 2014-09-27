@@ -10,7 +10,7 @@
 
 ~inter.names = [ 
 	\bufrec, \parts, \ir, \controls, \verb,
-	\score, \startScore, \gui 
+	\score, \startScore, \gui, \test_levels 
 ];
 
 ~inter.names.do({ |item|
